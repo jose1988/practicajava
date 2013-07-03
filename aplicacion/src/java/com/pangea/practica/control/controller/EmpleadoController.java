@@ -3,6 +3,7 @@ package com.pangea.practica.control.controller;
 import com.pangea.practica.modelo.entidades.Empleado;
 import com.pangea.practica.control.controller.util.JsfUtil;
 import com.pangea.practica.control.controller.util.PaginationHelper;
+import com.pangea.practica.control.servicios.Pruebaservicio_Service;
 import com.pangea.practica.modelo.bean.CargoFacade;
 import com.pangea.practica.modelo.bean.EmpleadoFacade;
 import com.pangea.practica.modelo.entidades.Cargo;
@@ -15,6 +16,7 @@ import java.util.Map;
 import java.util.ResourceBundle;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.component.UIComponent;
@@ -24,6 +26,8 @@ import javax.faces.convert.FacesConverter;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
+import javax.xml.ws.WebServiceRef;
+import org.primefaces.event.RowEditEvent;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
 
@@ -32,8 +36,12 @@ import org.primefaces.model.SortOrder;
 @ManagedBean(name = "empleadoController")
 @SessionScoped
 public class EmpleadoController implements Serializable {
+   @WebServiceRef(wsdlLocation = "WEB-INF/wsdl/192.168.1.102_15429/prueba/pruebaservicio.wsdl")
+   private Pruebaservicio_Service service;
 
     private Empleado current;
+
+   
     private DataModel items = null;
     @EJB
     private com.pangea.practica.modelo.bean.EmpleadoFacade ejbFacade;
@@ -49,7 +57,15 @@ public class EmpleadoController implements Serializable {
     private Cargo cargoselecionado;
     private List<Departamento> departamentos;
 
-    
+    private Cargo aux;
+
+    public Cargo getAux() {
+        return aux;
+    }
+
+    public void setAux(Cargo aux) {
+        this.aux = aux;
+    }
     private Departamento departamentoseleccionado;
     private String Buscar;
  private Empleado descripcion;
@@ -114,6 +130,13 @@ public class EmpleadoController implements Serializable {
     public void setCargoselecionado(Cargo cargoselecionado) {
         this.cargoselecionado = cargoselecionado;
     }
+     public Empleado getCurrent() {
+        return current;
+    }
+
+    public void setCurrent(Empleado current) {
+        this.current = current;
+    }
     
 public String getBuscar() {
         return Buscar;
@@ -164,10 +187,24 @@ public String getBuscar() {
     }
 
     public String create() {
+        
         try {
             current.setCargoid(cargoselecionado);
-            current.setIdDepartamento(departamentoseleccionado);
-            getFacade().create(current);
+            current.setDepartamentoid(departamentoseleccionado);
+            
+             com.pangea.practica.control.servicios.Empleado insert=new com.pangea.practica.control.servicios.Empleado();
+              com.pangea.practica.control.servicios.Cargo insert2=new com.pangea.practica.control.servicios.Cargo();
+              com.pangea.practica.control.servicios.Departamento insert3=new com.pangea.practica.control.servicios.Departamento();
+             insert.setEmpleadoid(current.getEmpleadoid());
+             insert.setNombre(current.getNombre());
+             insert.setApellido(current.getApellido());
+             insert.setDireccion(current.getDireccion());
+             insert.setSueldo(current.getSueldo().toBigInteger());
+             insert2.setCargoid(current.getCargoid().getCargoid());
+            insert.setCargoid(insert2);
+            insert3.setDepartamentoid(current.getDepartamentoid().getDepartamentoid());
+            insert.setDepartamentoid(insert3);
+            this.crearEmpleado(insert);
             JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("EmpleadoCreated"));
             return prepareCreate();
         } catch (Exception e) {
@@ -289,44 +326,7 @@ public String getBuscar() {
         return JsfUtil.getSelectItems(ejbFacade.findAll(), true);
     }
 
-    @FacesConverter(forClass = Empleado.class)
-    public static class EmpleadoControllerConverter implements Converter {
-
-        public Object getAsObject(FacesContext facesContext, UIComponent component, String value) {
-            if (value == null || value.length() == 0) {
-                return null;
-            }
-            EmpleadoController controller = (EmpleadoController) facesContext.getApplication().getELResolver().
-                    getValue(facesContext.getELContext(), null, "empleadoController");
-            return controller.ejbFacade.find(getKey(value));
-        }
-
-        java.lang.String getKey(String value) {
-            java.lang.String key;
-            key = value;
-            return key;
-        }
-
-        String getStringKey(java.lang.String value) {
-            StringBuffer sb = new StringBuffer();
-            sb.append(value);
-            return sb.toString();
-        }
-
-        public String getAsString(FacesContext facesContext, UIComponent component, Object object) {
-            if (object == null) {
-                return null;
-            }
-            if (object instanceof Empleado) {
-                Empleado o = (Empleado) object;
-                return getStringKey(o.getEmpleadoid().toString());
-            } else {
-                throw new IllegalArgumentException("object " + object + " is of type " + object.getClass().getName() + "; expected type: " + Empleado.class.getName());
-            }
-        }
-    }
-    
-      @FacesConverter(forClass = Cargo.class)
+   @FacesConverter(forClass = Cargo.class)
     public static class CargoControllerConverter implements Converter {
 
         public Object getAsObject(FacesContext facesContext, UIComponent component, String value) {
@@ -338,13 +338,13 @@ public String getBuscar() {
             return controller.cargoFacade.find(getKey(value));
         }
 
-        java.lang.String getKey(String value) {
-            java.lang.String key;
-            key = value;
+        java.math.BigDecimal getKey(String value) {
+            java.math.BigDecimal key;
+            key = new java.math.BigDecimal(value);
             return key;
         }
 
-        String getStringKey(java.lang.String value) {
+        String getStringKey(java.math.BigDecimal value) {
             StringBuffer sb = new StringBuffer();
             sb.append(value);
             return sb.toString();
@@ -356,14 +356,14 @@ public String getBuscar() {
             }
             if (object instanceof Cargo) {
                 Cargo o = (Cargo) object;
-                return getStringKey(o.getCargoid().toString());
+                return getStringKey(o.getCargoid());
             } else {
                 throw new IllegalArgumentException("object " + object + " is of type " + object.getClass().getName() + "; expected type: " + Cargo.class.getName());
             }
         }
     }
-      
-      @FacesConverter(forClass = Departamento.class)
+    
+    @FacesConverter(forClass = Departamento.class)
     public static class DepartamentoControllerConverter implements Converter {
 
         public Object getAsObject(FacesContext facesContext, UIComponent component, String value) {
@@ -375,13 +375,13 @@ public String getBuscar() {
             return controller.departamentoFacade.find(getKey(value));
         }
 
-        java.lang.String getKey(String value) {
-            java.lang.String key;
-            key = value;
+        java.math.BigDecimal getKey(String value) {
+            java.math.BigDecimal key;
+            key = new java.math.BigDecimal(value);
             return key;
         }
 
-        String getStringKey(java.lang.String value) {
+        String getStringKey(java.math.BigDecimal value) {
             StringBuffer sb = new StringBuffer();
             sb.append(value);
             return sb.toString();
@@ -393,9 +393,47 @@ public String getBuscar() {
             }
             if (object instanceof Departamento) {
                 Departamento o = (Departamento) object;
-                return getStringKey(o.getIdDepartamento().toString());
+                return getStringKey(o.getDepartamentoid());
             } else {
                 throw new IllegalArgumentException("object " + object + " is of type " + object.getClass().getName() + "; expected type: " + Departamento.class.getName());
+            }
+        }
+    }
+
+
+  @FacesConverter(forClass = Empleado.class)
+    public static class EmpleadoControllerConverter implements Converter {
+
+        public Object getAsObject(FacesContext facesContext, UIComponent component, String value) {
+            if (value == null || value.length() == 0) {
+                return null;
+            }
+            EmpleadoController controller = (EmpleadoController) facesContext.getApplication().getELResolver().
+                    getValue(facesContext.getELContext(), null, "empleadoController");
+            return controller.ejbFacade.find(getKey(value));
+        }
+
+        java.math.BigDecimal getKey(String value) {
+            java.math.BigDecimal key;
+            key = new java.math.BigDecimal(value);
+            return key;
+        }
+
+        String getStringKey(java.math.BigDecimal value) {
+            StringBuffer sb = new StringBuffer();
+            sb.append(value);
+            return sb.toString();
+        }
+
+        public String getAsString(FacesContext facesContext, UIComponent component, Object object) {
+            if (object == null) {
+                return null;
+            }
+            if (object instanceof Empleado) {
+                Empleado o = (Empleado) object;
+                return getStringKey(o.getEmpleadoid());
+            } else {
+                throw new IllegalArgumentException("object " + object + " is of type " + object.getClass().getName() + "; expected type: " + Empleado.class.getName());
             }
         }
     }
@@ -448,5 +486,54 @@ public String getBuscar() {
         this.lazyModel = lazyModel;
     }
 //fin lazy
+     public void onEdit(RowEditEvent event) {  
+         System.out.println("entro a edit");
+         Empleado c=(Empleado) event.getObject();
+         getFacade().edit(c);
+          
+    }  
+      
+    public void onCancel(RowEditEvent event) {  
+        System.out.println("entro a cancel");
+    }  
     
+    public void eliminar() {  
+       System.out.println("entro a eliminar");  
+       System.out.println(current.getNombre());
+       Empleado c=getFacade().find(current.getEmpleadoid());
+    
+       getFacade().remove(c);
+       inicializarLazy();
+       mostrarMensaje( 1,"Mensaje","ha sido eliminado");
+      
+    } 
+    
+     public void mostrarMensaje(int _opcMensaje, String _cabeceraMensaje, String _cuerpomensaje) {
+        FacesContext context = FacesContext.getCurrentInstance();
+        switch (_opcMensaje) {
+            case 0: {
+                context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, _cabeceraMensaje, _cuerpomensaje));
+                break;
+            }
+            case 1: {
+                context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, _cabeceraMensaje, _cuerpomensaje));
+                break;
+            }
+            case 2: {
+                context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, _cabeceraMensaje, _cuerpomensaje));
+                break;
+            }
+            case 3: {
+                context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, _cabeceraMensaje, _cuerpomensaje));
+                break;
+            }
+        }
+    }
+
+    private void crearEmpleado(com.pangea.practica.control.servicios.Empleado registroEmpleado) {
+        com.pangea.practica.control.servicios.Pruebaservicio port = service.getPruebaservicioPort();
+        port.crearEmpleado(registroEmpleado);
+    }
+
+
 }

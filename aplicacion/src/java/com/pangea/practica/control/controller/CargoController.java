@@ -3,6 +3,8 @@ package com.pangea.practica.control.controller;
 import com.pangea.practica.modelo.entidades.Cargo;
 import com.pangea.practica.control.controller.util.JsfUtil;
 import com.pangea.practica.control.controller.util.PaginationHelper;
+import com.pangea.practica.control.servicios.Pruebaservicio_Service;
+
 import com.pangea.practica.modelo.bean.CargoFacade;
 import java.awt.event.ActionEvent;
 
@@ -27,6 +29,7 @@ import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.xml.ws.WebServiceRef;
 import org.primefaces.event.DashboardReorderEvent;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.event.RowEditEvent;
@@ -57,7 +60,9 @@ import org.primefaces.model.chart.CartesianChartModel;
 @SessionScoped
 
 public class CargoController implements Serializable {
-
+  @WebServiceRef(wsdlLocation = "WEB-INF/wsdl/192.168.1.102_15429/prueba/pruebaservicio.wsdl")
+    private Pruebaservicio_Service service;
+    
     private Cargo current;
 
     
@@ -580,10 +585,13 @@ private String password1;
     public String create() {
       
         try {
-            
-            getFacade().create(current);
-            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("El cargo ha sido Creado"));
-            return prepareCreate();
+           com.pangea.practica.control.servicios.Cargo insert=new com.pangea.practica.control.servicios.Cargo();
+           insert.setCargoid(current.getCargoid());
+           insert.setDescripcion(current.getDescripcion());
+           insert.setNombre(current.getNombre());
+           
+            this.crearCargo(insert);
+             return prepareCreate();
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("Error al crear Cargo"));
             return null;
@@ -749,7 +757,7 @@ private String password1;
         return JsfUtil.getSelectItems(ejbFacade.findAll(), true);
     }
 
-    @FacesConverter(forClass = Cargo.class)
+      @FacesConverter(forClass = Cargo.class)
     public static class CargoControllerConverter implements Converter {
 
         public Object getAsObject(FacesContext facesContext, UIComponent component, String value) {
@@ -761,13 +769,13 @@ private String password1;
             return controller.ejbFacade.find(getKey(value));
         }
 
-        java.lang.String getKey(String value) {
-            java.lang.String key;
-            key = value;
+        java.math.BigDecimal getKey(String value) {
+            java.math.BigDecimal key;
+            key = new java.math.BigDecimal(value);
             return key;
         }
 
-        String getStringKey(java.lang.String value) {
+        String getStringKey(java.math.BigDecimal value) {
             StringBuffer sb = new StringBuffer();
             sb.append(value);
             return sb.toString();
@@ -779,7 +787,7 @@ private String password1;
             }
             if (object instanceof Cargo) {
                 Cargo o = (Cargo) object;
-                return getStringKey(o.getCargoid().toString());
+                return getStringKey(o.getCargoid());
             } else {
                 throw new IllegalArgumentException("object " + object + " is of type " + object.getClass().getName() + "; expected type: " + Cargo.class.getName());
             }
@@ -880,4 +888,11 @@ private String password1;
             }
         }
     }
+
+    private void crearCargo(com.pangea.practica.control.servicios.Cargo registroCargo) {
+        com.pangea.practica.control.servicios.Pruebaservicio port = service.getPruebaservicioPort();
+        port.crearCargo(registroCargo);
+    }
+
+ 
 }

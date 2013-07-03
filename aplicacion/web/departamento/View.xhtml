@@ -19,18 +19,9 @@
                     <h:outputText value="#{departamentoController.selected.idDepartamento}" title="#{bundle.ViewDepartamentoTitle_idDepartamento}"/>
                     <h:outputText value="#{bundle.ViewDepartamentoLabel_nombre}"/>
                     <h:outputText value="#{departamentoController.selected.nombre}" title="#{bundle.ViewDepartamentoTitle_nombre}"/>
-                    <h:outputText value="#{bundle.ViewDepartamentoLabel_cantEmpleados}"/>
-                    <h:outputText value="#{departamentoController.selected.cantEmpleados}" title="#{bundle.ViewDepartamentoTitle_cantEmpleados}"/>
-                    <h:outputText value="#{bundle.ViewDepartamentoLabel_descripcion}"/>
+                     <h:outputText value="#{bundle.ViewDepartamentoLabel_descripcion}"/>
                     <h:outputText value="#{departamentoController.selected.descripcion}" title="#{bundle.ViewDepartamentoTitle_descripcion}"/>
-                    <h:outputText value="#{bundle.ViewDepartamentoLabel_fechaCreacion}"/>
-                    <h:outputText value="#{departamentoController.selected.fechaCreacion}" title="#{bundle.ViewDepartamentoTitle_fechaCreacion}">
-                        <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
-                    </h:outputText>
-                    <h:outputText value="#{bundle.ViewDepartamentoLabel_otros}"/>
-                    <h:outputText value="#{departamentoController.selected.otros}" title="#{bundle.ViewDepartamentoTitle_otros}">
-                        <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
-                    </h:outputText>
+                   
                 </h:panelGrid>
                 <br />
                 <h:commandLink action="#{departamentoController.destroyAndView}" value="#{bundle.ViewDepartamentoDestroyLink}"/>

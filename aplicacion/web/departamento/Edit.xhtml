@@ -19,18 +19,9 @@
                     <h:inputText id="idDepartamento" value="#{departamentoController.selected.idDepartamento}" title="#{bundle.EditDepartamentoTitle_idDepartamento}" required="true" requiredMessage="#{bundle.EditDepartamentoRequiredMessage_idDepartamento}"/>
                     <h:outputLabel value="#{bundle.EditDepartamentoLabel_nombre}" for="nombre" />
                     <h:inputText id="nombre" value="#{departamentoController.selected.nombre}" title="#{bundle.EditDepartamentoTitle_nombre}" />
-                    <h:outputLabel value="#{bundle.EditDepartamentoLabel_cantEmpleados}" for="cantEmpleados" />
-                    <h:inputText id="cantEmpleados" value="#{departamentoController.selected.cantEmpleados}" title="#{bundle.EditDepartamentoTitle_cantEmpleados}" />
-                    <h:outputLabel value="#{bundle.EditDepartamentoLabel_descripcion}" for="descripcion" />
+                   <h:outputLabel value="#{bundle.EditDepartamentoLabel_descripcion}" for="descripcion" />
                     <h:inputText id="descripcion" value="#{departamentoController.selected.descripcion}" title="#{bundle.EditDepartamentoTitle_descripcion}" />
-                    <h:outputLabel value="#{bundle.EditDepartamentoLabel_fechaCreacion}" for="fechaCreacion" />
-                    <h:inputText id="fechaCreacion" value="#{departamentoController.selected.fechaCreacion}" title="#{bundle.EditDepartamentoTitle_fechaCreacion}" >
-                        <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
-                    </h:inputText>
-                    <h:outputLabel value="#{bundle.EditDepartamentoLabel_otros}" for="otros" />
-                    <h:inputText id="otros" value="#{departamentoController.selected.otros}" title="#{bundle.EditDepartamentoTitle_otros}" >
-                        <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
-                    </h:inputText>
+                  
                 </h:panelGrid>
                 <h:commandLink action="#{departamentoController.update}" value="#{bundle.EditDepartamentoSaveLink}"/>
                 <br />

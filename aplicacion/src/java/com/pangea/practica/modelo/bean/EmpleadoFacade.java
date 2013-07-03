@@ -42,26 +42,13 @@ public class EmpleadoFacade extends AbstractFacade<Empleado> {
     return BigD;
      
    }   
+    public void insertar(Empleado registro){
+        
+    this.create(registro);
+    } 
     
-     public  String psg2(){
-     
-     List<Empleado> q=null;
-     double m;
-       
-      double acum = 0 ;
-      String prom;
-     q=em.createNamedQuery("Empleado.findAll").getResultList();
-     
-     for(int i=0;i<q.size();i++){
-          m = q.get(i).getSueldo();
-         acum=acum+m;
-     }
-     acum=acum/q.size();
-     prom=String.valueOf(acum);
-     
-    return prom;
-     
-   } 
+    
+    
       public Empleado descripcion(String nombre){
       Empleado c=null;
       
@@ -72,7 +59,7 @@ public class EmpleadoFacade extends AbstractFacade<Empleado> {
      public  List<String[]> edc1(){
      
      List<Object[]> listac;
-    Query q=em.createNativeQuery("SELECT empleado. nombre , departamento.nombre, cargo.nombre FROM departamento, empleado, cargo  WHERE departamento.ID_DEPARTAMENTO= empleado.ID_DEPARTAMENTO and cargo.cargoId=empleado.cargoId");
+    Query q=em.createNativeQuery("SELECT empleado. nombre , departamento.nombre, cargo.nombre FROM departamento, empleado, cargo  WHERE departamento.departamentoId= empleado.departamentoId and cargo.cargoId=empleado.cargoId");
     listac= q.getResultList();
     
     List<String[]> lista=new ArrayList<String[]>();

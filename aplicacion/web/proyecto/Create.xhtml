@@ -19,18 +19,8 @@
                     <h:inputText id="proyectoid" value="#{proyectoController.selected.proyectoid}" title="#{bundle.CreateProyectoTitle_proyectoid}" required="true" requiredMessage="#{bundle.CreateProyectoRequiredMessage_proyectoid}"/>
                     <h:outputLabel value="#{bundle.CreateProyectoLabel_nombre}" for="nombre" />
                     <h:inputText id="nombre" value="#{proyectoController.selected.nombre}" title="#{bundle.CreateProyectoTitle_nombre}" />
-                    <h:outputLabel value="#{bundle.CreateProyectoLabel_fechainicio}" for="fechainicio" />
-                    <h:inputText id="fechainicio" value="#{proyectoController.selected.fechainicio}" title="#{bundle.CreateProyectoTitle_fechainicio}" >
-                        <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
-                    </h:inputText>
-                    <h:outputLabel value="#{bundle.CreateProyectoLabel_fechaentrega}" for="fechaentrega" />
-                    <h:inputText id="fechaentrega" value="#{proyectoController.selected.fechaentrega}" title="#{bundle.CreateProyectoTitle_fechaentrega}" >
-                        <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
-                    </h:inputText>
                     <h:outputLabel value="#{bundle.CreateProyectoLabel_descripcion}" for="descripcion" />
                     <h:inputText id="descripcion" value="#{proyectoController.selected.descripcion}" title="#{bundle.CreateProyectoTitle_descripcion}" />
-                    <h:outputLabel value="#{bundle.CreateProyectoLabel_participantes}" for="participantes" />
-                    <h:inputText id="participantes" value="#{proyectoController.selected.participantes}" title="#{bundle.CreateProyectoTitle_participantes}" />
                     <h:outputLabel value="#{bundle.CreateProyectoLabel_empleadoid}" for="empleadoid" />
                     <h:selectOneMenu id="empleadoid" value="#{proyectoController.selected.empleadoid}" title="#{bundle.CreateProyectoTitle_empleadoid}" >
                         <f:selectItems value="#{empleadoController.itemsAvailableSelectOne}"/>

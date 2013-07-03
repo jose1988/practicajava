@@ -32,4 +32,32 @@
                 JAX-WS WSIMPORT SECTION
                 ===================
             -->
+    <target name="wsimport-init" depends="init">
+        <fail if="${wsimport.bad.version}" message="WsImport ant task defined in the classpath ${j2ee.platform.wsimport.classpath} has a serious bug. See http://wiki.netbeans.org/MetroIssue for details."/>
+        <mkdir dir="${build.generated.sources.dir}/jax-ws"/>
+        <property name="j2ee.platform.wsimport.classpath" value="${libs.jaxws21.classpath}"/>
+        <taskdef name="wsimport" classname="com.sun.tools.ws.ant.WsImport">
+            <classpath path="${java.home}/../lib/tools.jar:${j2ee.platform.wsimport.classpath}:${javac.classpath}"/>
+        </taskdef>
+        <condition property="conf-dir" value="${conf.dir}/" else="">
+            <isset property="conf.dir"/>
+        </condition>
+    </target>
+    <target name="wsimport-client-pruebaservicio" depends="wsimport-init">
+        <mkdir dir="${build.generated.dir}/jax-wsCache/pruebaservicio"/>
+        <wsimport sourcedestdir="${build.generated.dir}/jax-wsCache/pruebaservicio" destdir="${build.generated.dir}/jax-wsCache/pruebaservicio" wsdl="${basedir}/${conf-dir}xml-resources/web-service-references/pruebaservicio/wsdl/192.168.1.102_15429/prueba/pruebaservicio.wsdl" catalog="catalog.xml" encoding="${source.encoding}" extension="true" verbose="true" wsdlLocation="http://192.168.1.102:15429/prueba/pruebaservicio?wsdl" xnocompile="true" xendorsed="true" package="com.pangea.practica.control.servicios">
+            <depends file="${basedir}/${conf-dir}xml-resources/web-service-references/pruebaservicio/wsdl/192.168.1.102_15429/prueba/pruebaservicio.wsdl"/>
+            <produces dir="${build.generated.dir}/jax-wsCache/pruebaservicio"/>
+        </wsimport>
+        <copy todir="${build.generated.sources.dir}/jax-ws">
+            <fileset dir="${build.generated.dir}/jax-wsCache/pruebaservicio">
+                <include name="**/*.java"/>
+            </fileset>
+        </copy>
+    </target>
+    <target name="wsimport-client-clean-pruebaservicio" depends="-init-project">
+        <delete dir="${build.generated.sources.dir}/jax-ws/com/pangea/practica/control/servicios"/>
+        <delete dir="${build.generated.dir}/jax-wsCache/pruebaservicio"/>
+    </target>
+    <target name="wsimport-client-generate" depends="wsimport-client-pruebaservicio"/>
 </project>

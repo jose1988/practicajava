@@ -34,7 +34,13 @@ public class CargoFacade extends AbstractFacade<Cargo> {
     Lista=findAll();
     return Lista;
 } 
+    public void insertar(Cargo registro){
+        
+    this.create(registro);
     
+   
+        
+    } 
    public Cargo descripcion(String nombre){
       Cargo c=null;
       

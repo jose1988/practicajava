@@ -30,13 +30,9 @@
 
                             <h:outputText value="#{bundle.Listdedescripcion}"> 
                             </h:outputText>
-                            <h:inputText value="#{cargoController.selected.descripcion}">
+                            <h:inputText value="#{cargoController.selected.descripcion}"></h:inputText>
 
-
-                            </h:inputText>
-                            <h:outputText value="#{bundle.ListCargoTitle_sueldobase}"> 
-                            </h:outputText>
-                             <p:keyboard value="#{cargoController.selected.sueldobase}" keypadOnly="true"/>  
+  
                            
                             <p:commandButton id="boton" value="Crear" update="@form :paneltabla :mess" actionListener="#{cargoController.create}" />
 
@@ -87,8 +83,7 @@
                         <h:outputText value="#{bundle.Listdedescripcion}"> 
                         </h:outputText>
                         <h:outputText value="#{cargoController.descripcion.descripcion}" />
-                        <h:outputText value="#{bundle.ListCargoTitle_sueldobase}"></h:outputText>
-                        <h:outputText value="#{cargoController.descripcion.sueldobase}" />
+                        
 
 
 
@@ -156,19 +151,7 @@
                                 </p:cellEditor> 
                                 
                             </p:column>
-                            <p:column>
-                                <f:facet name="header">
-                                    <h:outputText value="#{bundle.ListCargoTitle_sueldobase}"/>
-                                </f:facet>
-                               <p:cellEditor>   
-                                 <f:facet name="output">  
-                                        <h:outputText value="#{item.sueldobase}" /> 
-                                    </f:facet> 
-                                    <f:facet name="input">  
-                                        <p:inputText value="#{item.sueldobase}" />  
-                                    </f:facet> 
-                               </p:cellEditor> 
-                            </p:column>
+                           
 
                             <p:column style="width:6%">  
                                 <p:rowEditor />  

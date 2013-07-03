@@ -34,15 +34,14 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Cargo.findAll", query = "SELECT c FROM Cargo c"),
     @NamedQuery(name = "Cargo.findByCargoid", query = "SELECT c FROM Cargo c WHERE c.cargoid = :cargoid"),
     @NamedQuery(name = "Cargo.findByNombre", query = "SELECT c FROM Cargo c WHERE c.nombre = :nombre"),
-    @NamedQuery(name = "Cargo.findByDescripcion", query = "SELECT c FROM Cargo c WHERE c.descripcion = :descripcion"),
-    @NamedQuery(name = "Cargo.findBySueldobase", query = "SELECT c FROM Cargo c WHERE c.sueldobase = :sueldobase")})
+    @NamedQuery(name = "Cargo.findByDescripcion", query = "SELECT c FROM Cargo c WHERE c.descripcion = :descripcion"),})
 public class Cargo implements Serializable {
+
     private static final long serialVersionUID = 1L;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Id
-     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "CARGOSEQ")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "CARGOSEQ")
     @SequenceGenerator(name = "CARGOSEQ", sequenceName = "CARGO_SEQ", allocationSize = 1)
-  
     @Basic(optional = false)
     @Column(name = "CARGOID")
     private BigDecimal cargoid;
@@ -52,18 +51,17 @@ public class Cargo implements Serializable {
     @Size(max = 30)
     @Column(name = "DESCRIPCION")
     private String descripcion;
-    @Column(name = "SUELDOBASE")
-    private BigDecimal sueldobase;
-     @OneToMany(mappedBy = "cargoid", fetch = FetchType.LAZY,orphanRemoval=true)
+    @OneToMany(mappedBy = "cargoid", fetch = FetchType.LAZY, orphanRemoval = true)
     private List<Empleado> empleadoList;
 
-    public List<Empleado>  getEmpleadoList() {
+    public List<Empleado> getEmpleadoList() {
         return empleadoList;
     }
 
-    public void setEmpleadoList(List<Empleado>  empleadoList) {
+    public void setEmpleadoList(List<Empleado> empleadoList) {
         this.empleadoList = empleadoList;
     }
+
     public Cargo() {
     }
 
@@ -95,14 +93,6 @@ public class Cargo implements Serializable {
         this.descripcion = descripcion;
     }
 
-    public BigDecimal getSueldobase() {
-        return sueldobase;
-    }
-
-    public void setSueldobase(BigDecimal sueldobase) {
-        this.sueldobase = sueldobase;
-    }
-
     @Override
     public int hashCode() {
         int hash = 0;
@@ -127,5 +117,4 @@ public class Cargo implements Serializable {
     public String toString() {
         return "com.pangea.ejemplo.Cargo[ cargoid=" + cargoid + " ]";
     }
-    
 }

@@ -12,12 +12,15 @@ import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -41,13 +44,11 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Empleado.findByDireccion", query = "SELECT e FROM Empleado e WHERE e.direccion = :direccion"),
     @NamedQuery(name = "Empleado.findBySueldo", query = "SELECT e FROM Empleado e WHERE e.sueldo = :sueldo"),
     
-    @NamedQuery(name = "Empleado.findByDescripcion", query = "SELECT e FROM Empleado e WHERE e.descripcion = :descripcion")})
+    })
 public class Empleado implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 10)
     @Column(name = "EMPLEADOID")
     private BigDecimal empleadoid;
     @Size(max = 30)
@@ -56,38 +57,31 @@ public class Empleado implements Serializable {
     @Size(max = 30)
     @Column(name = "APELLIDO")
     private String apellido;
-    @Size(max = 30)
+    @Size(max = 120)
     @Column(name = "DIRECCION")
     private String direccion;
-    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "SUELDO")
-    private Double sueldo;
-    
-    @Size(max = 30)
-    @Column(name = "DESCRIPCION")
-    private String descripcion;
-    @JoinColumn(name = "ID_DEPARTAMENTO", referencedColumnName = "ID_DEPARTAMENTO")
+    private BigDecimal sueldo;
+    @JoinColumn(name = "DEPARTAMENTOID", referencedColumnName = "DEPARTAMENTOID")
     @ManyToOne(fetch = FetchType.LAZY)
-    private Departamento idDepartamento;
+    private Departamento departamentoid;
     @JoinColumn(name = "CARGOID", referencedColumnName = "CARGOID")
     @ManyToOne(fetch = FetchType.LAZY)
     private Cargo cargoid;
-    @OneToMany(mappedBy = "empleadoid", fetch = FetchType.LAZY)
-    private List<Proyecto> proyectoList;
 
     public Empleado() {
     }
 
-    public Empleado(BigDecimal empeladoid) {
-        this.empleadoid = empeladoid;
+    public Empleado(BigDecimal empleadoid) {
+        this.empleadoid = empleadoid;
     }
 
-    public Number getEmpleadoid() {
+    public BigDecimal getEmpleadoid() {
         return empleadoid;
     }
 
-    public void setEmpeladoid(BigDecimal empeladoid) {
-        this.empleadoid = empeladoid;
+    public void setEmpleadoid(BigDecimal empleadoid) {
+        this.empleadoid = empleadoid;
     }
 
     public String getNombre() {
@@ -114,32 +108,20 @@ public class Empleado implements Serializable {
         this.direccion = direccion;
     }
 
-   
-
-    public Double getSueldo() {
+    public BigDecimal getSueldo() {
         return sueldo;
     }
 
-    public void setSueldo(Double sueldo) {
+    public void setSueldo(BigDecimal sueldo) {
         this.sueldo = sueldo;
     }
 
- 
-
-    public String getDescripcion() {
-        return descripcion;
+    public Departamento getDepartamentoid() {
+        return departamentoid;
     }
 
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
-    }
-
-    public Departamento getIdDepartamento() {
-        return idDepartamento;
-    }
-
-    public void setIdDepartamento(Departamento idDepartamento) {
-        this.idDepartamento = idDepartamento;
+    public void setDepartamentoid(Departamento departamentoid) {
+        this.departamentoid = departamentoid;
     }
 
     public Cargo getCargoid() {
@@ -148,15 +130,6 @@ public class Empleado implements Serializable {
 
     public void setCargoid(Cargo cargoid) {
         this.cargoid = cargoid;
-    }
-
-    @XmlTransient
-    public List<Proyecto> getProyectoList() {
-        return proyectoList;
-    }
-
-    public void setProyectoList(List<Proyecto> proyectoList) {
-        this.proyectoList = proyectoList;
     }
 
     @Override
@@ -181,7 +154,7 @@ public class Empleado implements Serializable {
 
     @Override
     public String toString() {
-        return "com.pangea.practica.modelo.entidades.Empleado[ empleadoid=" + empleadoid + " ]";
+        return "com.pangea.modelo.entidades.Empleado[ empleadoid=" + empleadoid + " ]";
     }
     
 }

@@ -3,10 +3,12 @@ package com.pangea.practica.control.controller;
 import com.pangea.practica.modelo.entidades.Departamento;
 import com.pangea.practica.control.controller.util.JsfUtil;
 import com.pangea.practica.control.controller.util.PaginationHelper;
+import com.pangea.practica.control.servicios.Pruebaservicio_Service;
 import com.pangea.practica.modelo.bean.DepartamentoFacade;
 import com.pangea.practica.modelo.entidades.Cargo;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -22,6 +24,7 @@ import javax.faces.convert.FacesConverter;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
+import javax.xml.ws.WebServiceRef;
 import org.primefaces.event.RowEditEvent;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
@@ -29,6 +32,8 @@ import org.primefaces.model.SortOrder;
 @ManagedBean(name = "departamentoController")
 @SessionScoped
 public class DepartamentoController implements Serializable {
+    @WebServiceRef(wsdlLocation = "WEB-INF/wsdl/192.168.1.102_15429/prueba/pruebaservicio.wsdl")
+   private Pruebaservicio_Service service;
 
     private Departamento current;
 
@@ -111,7 +116,13 @@ public Departamento getCurrent() {
 
     public String create() {
         try {
-            getFacade().create(current);
+          
+            com.pangea.practica.control.servicios.Departamento insert=new com.pangea.practica.control.servicios.Departamento();
+            insert.setDepartamentoid(current.getDepartamentoid());
+            insert.setDescripcion(current.getDescripcion());
+           insert.setNombre(current.getNombre());
+         this.crearDepartameto(insert);
+         
             JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("DepartamentoCreated"));
             return prepareCreate();
         } catch (Exception e) {
@@ -241,7 +252,7 @@ public Departamento getCurrent() {
         return JsfUtil.getSelectItems(ejbFacade.findAll(), true);
     }
 
-    @FacesConverter(forClass = Departamento.class)
+   @FacesConverter(forClass = Departamento.class)
     public static class DepartamentoControllerConverter implements Converter {
 
         public Object getAsObject(FacesContext facesContext, UIComponent component, String value) {
@@ -253,13 +264,13 @@ public Departamento getCurrent() {
             return controller.ejbFacade.find(getKey(value));
         }
 
-        java.lang.String getKey(String value) {
-            java.lang.String key;
-            key = value;
+        java.math.BigDecimal getKey(String value) {
+            java.math.BigDecimal key;
+            key = new java.math.BigDecimal(value);
             return key;
         }
 
-        String getStringKey(java.lang.String value) {
+        String getStringKey(java.math.BigDecimal value) {
             StringBuffer sb = new StringBuffer();
             sb.append(value);
             return sb.toString();
@@ -271,7 +282,7 @@ public Departamento getCurrent() {
             }
             if (object instanceof Departamento) {
                 Departamento o = (Departamento) object;
-                return getStringKey(o.getIdDepartamento().toString());
+                return getStringKey(o.getDepartamentoid());
             } else {
                 throw new IllegalArgumentException("object " + object + " is of type " + object.getClass().getName() + "; expected type: " + Departamento.class.getName());
             }
@@ -342,7 +353,7 @@ public Departamento getCurrent() {
      public void eliminar() {  
        System.out.println("entro a eliminar");  
        System.out.println(current.getNombre());
-       Departamento c=getFacade().find(current.getIdDepartamento());
+       Departamento c=getFacade().find(current.getDepartamentoid());
         if(c.getEmpleadoList().size()<1) {
        c.setEmpleadoList(null);
        getFacade().remove(c);
@@ -371,5 +382,10 @@ public Departamento getCurrent() {
                 break;
             }
         }
+    }
+
+    private void crearDepartameto(com.pangea.practica.control.servicios.Departamento registroDepartamento) {
+        com.pangea.practica.control.servicios.Pruebaservicio port = service.getPruebaservicioPort();
+        port.crearDepartameto(registroDepartamento);
     }
 }

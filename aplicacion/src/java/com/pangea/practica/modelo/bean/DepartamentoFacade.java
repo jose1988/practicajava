@@ -45,10 +45,18 @@ public class DepartamentoFacade extends AbstractFacade<Departamento> {
       return c;
    }  
     
- public  List<String[]> psd1(){
+ 
+    public void insertar(Departamento registro){
+        
+    this.create(registro);
+    } 
+    
+  
+    
+    public  List<String[]> psd1(){
      
      List<Object[]> listac;
-    Query q=em.createNativeQuery("SELECT departamento.nombre , AVG(empleado.sueldo) FROM departamento, empleado  WHERE departamento.ID_DEPARTAMENTO= empleado.ID_DEPARTAMENTO GROUP By departamento.nombre");
+    Query q=em.createNativeQuery("SELECT departamento.nombre , AVG(empleado.sueldo) FROM departamento, empleado  WHERE departamento.DEPARTAMENTOID= empleado.DEPARTAMENTOID GROUP By departamento.nombre");
     listac= q.getResultList();
     
     List<String[]> lista=new ArrayList<String[]>();
@@ -70,36 +78,12 @@ public class DepartamentoFacade extends AbstractFacade<Departamento> {
      
    }   
  
-  public  List<String[]> psd2(){
-       List<Departamento> c=null;
-      
-     c=( List<Departamento>) em.createNamedQuery("Departamento.findAll").getResultList();
-      List<String[]> lista=new ArrayList<String[]>();
-     for(int i=0; i<c.size(); i++){
-         String[] vect=new String[2];
-         List<Empleado> le=null;
-         double m = 0;
-         double acum=0;
-         String prom;
-         le=c.get(i).getEmpleadoList();
-         for(int j=0; j<le.size(); j++){
-            m=c.get(i).getEmpleadoList().get(j).getSueldo();
-            acum=acum+m;
-         }
-         acum=acum/le.size();
-         prom=String.valueOf(m);
-          
-          vect[0]=new String(c.get(i).getNombre());
-          vect[1]=new String(prom);
-           lista.add(vect);
-     }
-    return lista;
-   }  
+  
  
  public  List<String[]> cep1(){
      
      List<Object[]> listac;
-    Query q=em.createNativeQuery("SELECT departamento.nombre, count (*) FROM departamento, empleado WHERE departamento.ID_DEPARTAMENTO= empleado.ID_DEPARTAMENTO GROUP By departamento.nombre");
+    Query q=em.createNativeQuery("SELECT departamento.nombre, count (*) FROM departamento, empleado WHERE departamento.DEPARTAMENTOID= empleado.DEPARTAMENTOID GROUP By departamento.nombre");
     listac= q.getResultList();
     
     List<String[]> lista=new ArrayList<String[]>();

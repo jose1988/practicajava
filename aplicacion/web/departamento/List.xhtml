@@ -29,11 +29,7 @@
                             <h:inputText value="#{departamentoController.selected.descripcion}">
                             </h:inputText>
                             
-                            <h:outputText value="#{bundle.ListDepartamentoTitle_cantEmpleados}"> 
-                            </h:outputText>
-                            
-                             <p:keyboard value="#{departamentoController.selected.cantEmpleados}" keypadOnly="true"/>  
-                          
+                         
                           
                             <p:commandButton id="boton" value="Crear" update="@form :paneltabla :mess" actionListener="#{departamentoController.create}" />  
                             
@@ -92,8 +88,7 @@
                          <h:outputText value="#{departamentoController.descripcion.descripcion}" />
                          
                         
-                <h:outputText value="#{bundle.ListDepartamentoTitle_cantEmpleados}"></h:outputText>
-                <h:outputText value="#{departamentoController.descripcion.cantEmpleados}" />
+              
                  
                   
                   
@@ -119,7 +114,7 @@
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListDepartamentoTitle_idDepartamento}"/>
                             </f:facet>
-                            <h:outputText value="#{item.idDepartamento}"/>
+                             <h:outputText value="#{item.departamentoid}"/>
                         </p:column>
                         <p:column>
                             <f:facet name="header">
@@ -136,20 +131,7 @@
                                </p:cellEditor> 
                            
                         </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListDepartamentoTitle_cantEmpleados}"/>
-                            </f:facet> 
-                             <p:cellEditor>   
-                                 <f:facet name="output">  
-                                        <h:outputText value="#{item.cantEmpleados}" /> 
-                                    </f:facet> 
-                                    <f:facet name="input">  
-                                        <p:inputText value="#{item.cantEmpleados}" />  
-                                    </f:facet> 
-                               </p:cellEditor> 
                       
-                        </p:column>
                         <p:column>
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListDepartamentoTitle_descripcion}"/>

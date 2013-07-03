@@ -1,0 +1,249 @@
+<?xml version='1.0' encoding='UTF-8'?><!-- Published by JAX-WS RI at http://jax-ws.dev.java.net. RI's version is Metro/2.2.0-1 (tags/2.2.0u1-7139; 2012-06-02T10:55:19+0000) JAXWS-RI/2.2.6-2 JAXWS/2.2 svn-revision#unknown. --><xs:schema xmlns:tns="http://servicio.prueba.pangea.com/" xmlns:ns1="http://jaxb.dev.java.net/array" xmlns:xs="http://www.w3.org/2001/XMLSchema" version="1.0" targetNamespace="http://servicio.prueba.pangea.com/">
+
+<xs:import namespace="http://jaxb.dev.java.net/array" schemaLocation="http://192.168.1.102:15429/prueba/pruebaservicio?xsd=2"/>
+
+<xs:element name="cantidadEmpleados" type="tns:cantidadEmpleados"/>
+
+<xs:element name="cantidadEmpleadosJPQL" type="tns:cantidadEmpleadosJPQL"/>
+
+<xs:element name="cantidadEmpleadosJPQLResponse" type="tns:cantidadEmpleadosJPQLResponse"/>
+
+<xs:element name="cantidadEmpleadosResponse" type="tns:cantidadEmpleadosResponse"/>
+
+<xs:element name="cargo" type="tns:cargo"/>
+
+<xs:element name="crearCargo" type="tns:crearCargo"/>
+
+<xs:element name="crearCargoResponse" type="tns:crearCargoResponse"/>
+
+<xs:element name="crearDepartameto" type="tns:crearDepartameto"/>
+
+<xs:element name="crearDepartametoResponse" type="tns:crearDepartametoResponse"/>
+
+<xs:element name="crearEmpleado" type="tns:crearEmpleado"/>
+
+<xs:element name="crearEmpleadoResponse" type="tns:crearEmpleadoResponse"/>
+
+<xs:element name="crearProyecto" type="tns:crearProyecto"/>
+
+<xs:element name="crearProyectoResponse" type="tns:crearProyectoResponse"/>
+
+<xs:element name="departamento" type="tns:departamento"/>
+
+<xs:element name="descripcionCargo" type="tns:descripcionCargo"/>
+
+<xs:element name="descripcionCargoResponse" type="tns:descripcionCargoResponse"/>
+
+<xs:element name="empleado" type="tns:empleado"/>
+
+<xs:element name="hello" type="tns:hello"/>
+
+<xs:element name="helloResponse" type="tns:helloResponse"/>
+
+<xs:element name="listaDepartamento" type="tns:listaDepartamento"/>
+
+<xs:element name="listaDepartamentoMayor" type="tns:listaDepartamentoMayor"/>
+
+<xs:element name="listaDepartamentoMayorResponse" type="tns:listaDepartamentoMayorResponse"/>
+
+<xs:element name="listaDepartamentoResponse" type="tns:listaDepartamentoResponse"/>
+
+<xs:element name="promedioSueldo" type="tns:promedioSueldo"/>
+
+<xs:element name="promedioSueldoGeneral" type="tns:promedioSueldoGeneral"/>
+
+<xs:element name="promedioSueldoGeneralResponse" type="tns:promedioSueldoGeneralResponse"/>
+
+<xs:element name="promedioSueldoResponse" type="tns:promedioSueldoResponse"/>
+
+<xs:element name="proyecto" type="tns:proyecto"/>
+
+<xs:element name="todo" type="tns:todo"/>
+
+<xs:element name="todoJPQL" type="tns:todoJPQL"/>
+
+<xs:element name="todoJPQLResponse" type="tns:todoJPQLResponse"/>
+
+<xs:element name="todoResponse" type="tns:todoResponse"/>
+
+<xs:complexType name="descripcionCargo">
+<xs:sequence>
+<xs:element name="name" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="descripcionCargoResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:cargo" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="cargo">
+<xs:sequence>
+<xs:element name="cargoid" type="xs:decimal" minOccurs="0"/>
+<xs:element name="descripcion" type="xs:string" minOccurs="0"/>
+<xs:element name="nombre" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="promedioSueldoGeneral">
+<xs:sequence/>
+</xs:complexType>
+
+<xs:complexType name="promedioSueldoGeneralResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:decimal" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="listaDepartamentoMayor">
+<xs:sequence/>
+</xs:complexType>
+
+<xs:complexType name="listaDepartamentoMayorResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:departamento" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="departamento">
+<xs:sequence>
+<xs:element name="departamentoid" type="xs:decimal" minOccurs="0"/>
+<xs:element name="descripcion" type="xs:string" minOccurs="0"/>
+<xs:element name="nombre" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="promedioSueldo">
+<xs:sequence/>
+</xs:complexType>
+
+<xs:complexType name="promedioSueldoResponse">
+<xs:sequence>
+<xs:element name="return" type="ns1:stringArray" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="hello">
+<xs:sequence>
+<xs:element name="name" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="helloResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="todoJPQL">
+<xs:sequence/>
+</xs:complexType>
+
+<xs:complexType name="todoJPQLResponse">
+<xs:sequence>
+<xs:element name="return" type="ns1:stringArray" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="crearDepartameto">
+<xs:sequence>
+<xs:element name="registroDepartamento" type="tns:departamento" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="crearDepartametoResponse">
+<xs:sequence/>
+</xs:complexType>
+
+<xs:complexType name="crearCargo">
+<xs:sequence>
+<xs:element name="registroCargo" type="tns:cargo" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="crearCargoResponse">
+<xs:sequence/>
+</xs:complexType>
+
+<xs:complexType name="cantidadEmpleadosJPQL">
+<xs:sequence/>
+</xs:complexType>
+
+<xs:complexType name="cantidadEmpleadosJPQLResponse">
+<xs:sequence>
+<xs:element name="return" type="ns1:stringArray" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="listaDepartamento">
+<xs:sequence/>
+</xs:complexType>
+
+<xs:complexType name="listaDepartamentoResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:departamento" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="cantidadEmpleados">
+<xs:sequence/>
+</xs:complexType>
+
+<xs:complexType name="cantidadEmpleadosResponse">
+<xs:sequence>
+<xs:element name="return" type="ns1:stringArray" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="crearProyecto">
+<xs:sequence>
+<xs:element name="registroProyecto" type="tns:proyecto" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="proyecto">
+<xs:sequence>
+<xs:element name="descripcion" type="xs:string" minOccurs="0"/>
+<xs:element name="empleadoid" type="tns:empleado" minOccurs="0"/>
+<xs:element name="nombre" type="xs:string" minOccurs="0"/>
+<xs:element name="proyectoid" type="xs:decimal" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="empleado">
+<xs:sequence>
+<xs:element name="apellido" type="xs:string" minOccurs="0"/>
+<xs:element name="cargoid" type="tns:cargo" minOccurs="0"/>
+<xs:element name="departamentoid" type="tns:departamento" minOccurs="0"/>
+<xs:element name="direccion" type="xs:string" minOccurs="0"/>
+<xs:element name="empleadoid" type="xs:decimal" minOccurs="0"/>
+<xs:element name="nombre" type="xs:string" minOccurs="0"/>
+<xs:element name="sueldo" type="xs:integer" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="crearProyectoResponse">
+<xs:sequence/>
+</xs:complexType>
+
+<xs:complexType name="crearEmpleado">
+<xs:sequence>
+<xs:element name="registroEmpleado" type="tns:empleado" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="crearEmpleadoResponse">
+<xs:sequence/>
+</xs:complexType>
+
+<xs:complexType name="todo">
+<xs:sequence/>
+</xs:complexType>
+
+<xs:complexType name="todoResponse">
+<xs:sequence>
+<xs:element name="return" type="ns1:stringArray" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+</xs:schema>

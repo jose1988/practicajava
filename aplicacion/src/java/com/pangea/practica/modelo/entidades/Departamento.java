@@ -36,47 +36,41 @@ import javax.xml.bind.annotation.XmlTransient;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Departamento.findAll", query = "SELECT d FROM Departamento d"),
-    @NamedQuery(name = "Departamento.findByIdDepartamento", query = "SELECT d FROM Departamento d WHERE d.idDepartamento = :idDepartamento"),
+    @NamedQuery(name = "Departamento.findByIdDepartamento", query = "SELECT d FROM Departamento d WHERE d.departamentoid = :idDepartamento"),
     @NamedQuery(name = "Departamento.findByNombre", query = "SELECT d FROM Departamento d WHERE d.nombre = :nombre"),
-    @NamedQuery(name = "Departamento.findByCantEmpleados", query = "SELECT d FROM Departamento d WHERE d.cantEmpleados = :cantEmpleados"),
     @NamedQuery(name = "Departamento.findBylong", query = "SELECT d FROM Departamento d WHERE length(d.nombre)>6"),
-    @NamedQuery(name = "Departamento.findByDescripcion", query = "SELECT d FROM Departamento d WHERE d.descripcion = :descripcion"),
-   })
+    @NamedQuery(name = "Departamento.findByDescripcion", query = "SELECT d FROM Departamento d WHERE d.descripcion = :descripcion"),})
 public class Departamento implements Serializable {
+
     private static final long serialVersionUID = 1L;
-     @Id
-     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "DEPARTAMENTOSEQ")
-    @SequenceGenerator(name = "DEPARTAMENTOSEQ", sequenceName = "DEPARTAMENTO_SE", allocationSize = 1)
-  
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "DEPARTAMENTOSEQ")
+    @SequenceGenerator(name = "DEPARTAMENTOSEQ", sequenceName = "DEPARTAMENTO_SEQ", allocationSize = 1)
     @Basic(optional = false)
-    @Column(name = "ID_DEPARTAMENTO")
-    private BigDecimal idDepartamento;
+    @Column(name = "DEPARTAMENTOID")
+    private BigDecimal departamentoid;
     @Size(max = 30)
     @Column(name = "NOMBRE")
     private String nombre;
-    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
-    @Column(name = "CANT_EMPLEADOS")
-    private BigDecimal cantEmpleados;
-    @Size(max = 50)
+    @Size(max = 120)
     @Column(name = "DESCRIPCION")
     private String descripcion;
-  
-    @OneToMany(mappedBy = "idDepartamento", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "departamentoid", fetch = FetchType.LAZY)
     private List<Empleado> empleadoList;
 
     public Departamento() {
     }
 
-    public Departamento(BigDecimal idDepartamento) {
-        this.idDepartamento = idDepartamento;
+    public Departamento(BigDecimal departamentoid) {
+        this.departamentoid = departamentoid;
     }
 
-    public Number getIdDepartamento() {
-        return idDepartamento;
+    public BigDecimal getDepartamentoid() {
+        return departamentoid;
     }
 
-    public void setIdDepartamento(BigDecimal idDepartamento) {
-        this.idDepartamento = idDepartamento;
+    public void setDepartamentoid(BigDecimal departamentoid) {
+        this.departamentoid = departamentoid;
     }
 
     public String getNombre() {
@@ -87,14 +81,6 @@ public class Departamento implements Serializable {
         this.nombre = nombre;
     }
 
-    public BigDecimal getCantEmpleados() {
-        return cantEmpleados;
-    }
-
-    public void setCantEmpleados(BigDecimal cantEmpleados) {
-        this.cantEmpleados = cantEmpleados;
-    }
-
     public String getDescripcion() {
         return descripcion;
     }
@@ -102,12 +88,6 @@ public class Departamento implements Serializable {
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
     }
-
-   
-
-    
-
-    
 
     @XmlTransient
     public List<Empleado> getEmpleadoList() {
@@ -121,7 +101,7 @@ public class Departamento implements Serializable {
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (idDepartamento != null ? idDepartamento.hashCode() : 0);
+        hash += (departamentoid != null ? departamentoid.hashCode() : 0);
         return hash;
     }
 
@@ -132,7 +112,7 @@ public class Departamento implements Serializable {
             return false;
         }
         Departamento other = (Departamento) object;
-        if ((this.idDepartamento == null && other.idDepartamento != null) || (this.idDepartamento != null && !this.idDepartamento.equals(other.idDepartamento))) {
+        if ((this.departamentoid == null && other.departamentoid != null) || (this.departamentoid != null && !this.departamentoid.equals(other.departamentoid))) {
             return false;
         }
         return true;
@@ -140,7 +120,6 @@ public class Departamento implements Serializable {
 
     @Override
     public String toString() {
-        return "com.pangea.practica.modelo.entidades.Departamento[ idDepartamento=" + idDepartamento + " ]";
+        return "com.pangea.modelo.entidades.Departamento[ departamentoid=" + departamentoid + " ]";
     }
-    
 }

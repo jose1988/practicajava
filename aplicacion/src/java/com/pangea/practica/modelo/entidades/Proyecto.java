@@ -11,11 +11,14 @@ import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -34,33 +37,22 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Proyecto.findAll", query = "SELECT p FROM Proyecto p"),
     @NamedQuery(name = "Proyecto.findByProyectoid", query = "SELECT p FROM Proyecto p WHERE p.proyectoid = :proyectoid"),
     @NamedQuery(name = "Proyecto.findByNombre", query = "SELECT p FROM Proyecto p WHERE p.nombre = :nombre"),
-    @NamedQuery(name = "Proyecto.findByFechainicio", query = "SELECT p FROM Proyecto p WHERE p.fechainicio = :fechainicio"),
-    @NamedQuery(name = "Proyecto.findByFechaentrega", query = "SELECT p FROM Proyecto p WHERE p.fechaentrega = :fechaentrega"),
-    @NamedQuery(name = "Proyecto.findByDescripcion", query = "SELECT p FROM Proyecto p WHERE p.descripcion = :descripcion"),
-    @NamedQuery(name = "Proyecto.findByParticipantes", query = "SELECT p FROM Proyecto p WHERE p.participantes = :participantes")})
+    @NamedQuery(name = "Proyecto.findByDescripcion", query = "SELECT p FROM Proyecto p WHERE p.descripcion = :descripcion")})
 public class Proyecto implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 30)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "proyectoSEQ")
+    @SequenceGenerator(name = "proyectoSEQ", sequenceName = "PROYECTO_SEQ", allocationSize = 1)
     @Column(name = "PROYECTOID")
     private BigDecimal proyectoid;
     @Size(max = 30)
     @Column(name = "NOMBRE")
     private String nombre;
-    @Column(name = "FECHAINICIO")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date fechainicio;
-    @Column(name = "FECHAENTREGA")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date fechaentrega;
     @Size(max = 30)
     @Column(name = "DESCRIPCION")
     private String descripcion;
-    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
-    @Column(name = "PARTICIPANTES")
-    private BigDecimal participantes;
     @JoinColumn(name = "EMPLEADOID", referencedColumnName = "EMPLEADOID")
     @ManyToOne(fetch = FetchType.LAZY)
     private Empleado empleadoid;
@@ -72,7 +64,7 @@ public class Proyecto implements Serializable {
         this.proyectoid = proyectoid;
     }
 
-    public Number getProyectoid() {
+    public BigDecimal getProyectoid() {
         return proyectoid;
     }
 
@@ -88,36 +80,12 @@ public class Proyecto implements Serializable {
         this.nombre = nombre;
     }
 
-    public Date getFechainicio() {
-        return fechainicio;
-    }
-
-    public void setFechainicio(Date fechainicio) {
-        this.fechainicio = fechainicio;
-    }
-
-    public Date getFechaentrega() {
-        return fechaentrega;
-    }
-
-    public void setFechaentrega(Date fechaentrega) {
-        this.fechaentrega = fechaentrega;
-    }
-
     public String getDescripcion() {
         return descripcion;
     }
 
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
-    }
-
-    public BigDecimal getParticipantes() {
-        return participantes;
-    }
-
-    public void setParticipantes(BigDecimal participantes) {
-        this.participantes = participantes;
     }
 
     public Empleado getEmpleadoid() {
@@ -152,5 +120,4 @@ public class Proyecto implements Serializable {
     public String toString() {
         return "com.pangea.practica.modelo.entidades.Proyecto[ proyectoid=" + proyectoid + " ]";
     }
-    
 }

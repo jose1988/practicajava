@@ -19,18 +19,8 @@
                     <h:inputText id="proyectoid" value="#{proyectoController.selected.proyectoid}" title="#{bundle.EditProyectoTitle_proyectoid}" required="true" requiredMessage="#{bundle.EditProyectoRequiredMessage_proyectoid}"/>
                     <h:outputLabel value="#{bundle.EditProyectoLabel_nombre}" for="nombre" />
                     <h:inputText id="nombre" value="#{proyectoController.selected.nombre}" title="#{bundle.EditProyectoTitle_nombre}" />
-                    <h:outputLabel value="#{bundle.EditProyectoLabel_fechainicio}" for="fechainicio" />
-                    <h:inputText id="fechainicio" value="#{proyectoController.selected.fechainicio}" title="#{bundle.EditProyectoTitle_fechainicio}" >
-                        <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
-                    </h:inputText>
-                    <h:outputLabel value="#{bundle.EditProyectoLabel_fechaentrega}" for="fechaentrega" />
-                    <h:inputText id="fechaentrega" value="#{proyectoController.selected.fechaentrega}" title="#{bundle.EditProyectoTitle_fechaentrega}" >
-                        <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
-                    </h:inputText>
-                    <h:outputLabel value="#{bundle.EditProyectoLabel_descripcion}" for="descripcion" />
+                   <h:outputLabel value="#{bundle.EditProyectoLabel_descripcion}" for="descripcion" />
                     <h:inputText id="descripcion" value="#{proyectoController.selected.descripcion}" title="#{bundle.EditProyectoTitle_descripcion}" />
-                    <h:outputLabel value="#{bundle.EditProyectoLabel_participantes}" for="participantes" />
-                    <h:inputText id="participantes" value="#{proyectoController.selected.participantes}" title="#{bundle.EditProyectoTitle_participantes}" />
                     <h:outputLabel value="#{bundle.EditProyectoLabel_empleadoid}" for="empleadoid" />
                     <h:selectOneMenu id="empleadoid" value="#{proyectoController.selected.empleadoid}" title="#{bundle.EditProyectoTitle_empleadoid}" >
                         <f:selectItems value="#{empleadoController.itemsAvailableSelectOne}"/>
